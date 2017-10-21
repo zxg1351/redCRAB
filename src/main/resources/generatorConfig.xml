@@ -36,7 +36,7 @@
             <property name="enableSubPackages" value="true"></property>
         </javaClientGenerator>
         <table schema="" tableName="m_user" domainObjectName="MUser">
-            <generatedKey column="id" identity="true" sqlStatement="Mysql"></generatedKey>
+            <generatedKey column="id" identity="true" sqlStatement="Mysql" ></generatedKey>
         </table>
         <table schema="" tableName="m_province" domainObjectName="MProvince">
             <generatedKey column="id" identity="true" sqlStatement="Mysql"></generatedKey>
