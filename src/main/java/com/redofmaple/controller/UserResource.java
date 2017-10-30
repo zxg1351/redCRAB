@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user")
 @Api(value = "用户")
-public class UserController {
+public class UserResource {
 
     @Autowired
     private MUserMapper mUserMapper;
