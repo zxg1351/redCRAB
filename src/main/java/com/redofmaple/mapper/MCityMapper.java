@@ -1,7 +1,5 @@
 package com.redofmaple.mapper;
 
-import com.redofmaple.entity.gen.MCity;
-import com.redofmaple.entity.gen.MCityExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

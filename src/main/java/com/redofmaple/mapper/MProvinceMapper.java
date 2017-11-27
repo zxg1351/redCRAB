@@ -1,7 +1,5 @@
 package com.redofmaple.mapper;
 
-import com.redofmaple.entity.gen.MProvince;
-import com.redofmaple.entity.gen.MProvinceExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,7 +1,5 @@
 package com.redofmaple.mapper;
 
-import com.redofmaple.entity.gen.MBanner;
-import com.redofmaple.entity.gen.MBannerExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

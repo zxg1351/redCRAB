@@ -1,7 +1,5 @@
 package com.redofmaple.mapper;
 
-import com.redofmaple.entity.gen.MArea;
-import com.redofmaple.entity.gen.MAreaExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

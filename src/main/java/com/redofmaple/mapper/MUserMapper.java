@@ -1,7 +1,5 @@
 package com.redofmaple.mapper;
 
-import com.redofmaple.entity.gen.MUser;
-import com.redofmaple.entity.gen.MUserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
