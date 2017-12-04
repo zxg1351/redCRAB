@@ -1,6 +1,7 @@
 package com.redofmaple.controller;
 
 
+import com.redofmaple.common.bean.ApiResult;
 import com.redofmaple.domain.Users;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,10 +15,6 @@ import java.util.List;
 @Api(value = "用户")
 public class UserResource {
 
-//    @Autowired
-//    private MUserMapper mUserMapper;
-
-
     @ApiOperation(value = "获取用户列表", notes = "")
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public List<Users> getUserList() {
@@ -25,17 +22,14 @@ public class UserResource {
         return r;
     }
 
-//    @ApiOperation(value = "获取test数据库列表", notes = "")
-//    @PostMapping("/getUserList")
-//    public List<MUser> getUser() {
-//        List<MUser> mUserList = new ArrayList<>();
-//        MUserExample mUserExample = new MUserExample();
-//        mUserExample.createCriteria().andDelFlagEqualTo("0");
-//
-//        mUserList = mUserMapper.selectByExample(mUserExample);
-//        return mUserList;
-//
-//    }
+    @ApiOperation(value = "登录",notes = "")
+    @RequestMapping(value = "",method = RequestMethod.POST)
+    public ApiResult userLogin(){
 
+        ApiResult apiResult = new ApiResult();
+        return apiResult;
+    }
+
+//    @ApiOperation(value = "注册")
 }
 
