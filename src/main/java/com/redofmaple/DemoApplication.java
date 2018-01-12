@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.redofmaple.mapper")
+@MapperScan(basePackages = "com.redofmaple.repository")
 public class DemoApplication {
 
 	public static void main(String[] args) {
