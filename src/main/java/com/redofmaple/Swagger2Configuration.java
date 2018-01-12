@@ -25,7 +25,7 @@ public class Swagger2Configuration {
     private ApiInfo buildApiInf() {
         return new ApiInfoBuilder()
                 .title("本系统提供restful服务API列表：")
-                .contact("雅谷科技")
+                .contact("zhaoxg")
                 .version("1.0")
                 .build();
     }
