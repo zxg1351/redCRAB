@@ -11,7 +11,7 @@ public class UtilsTools {
      * 生成UUID
      * @return
      */
-    public String generateUUID(){
+    public static String generateUUID(){
         String result = UUID.randomUUID().toString();
         return result;
     }

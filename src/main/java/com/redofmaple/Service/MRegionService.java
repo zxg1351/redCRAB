@@ -1,4 +1,4 @@
-package com.redofmaple.Service;
+package com.redofmaple.service;
 
 
 import com.redofmaple.common.bean.ResultInfo;

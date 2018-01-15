@@ -1,13 +1,14 @@
-package com.redofmaple.Service.impl;
+package com.redofmaple.service.impl;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.MAreaModel;
-import com.zxg.maplehourse.model.MCityModel;
-import com.zxg.maplehourse.model.MProvinceModel;
-import com.zxg.maplehourse.repository.MAreaRepository;
-import com.zxg.maplehourse.repository.MCityRepository;
-import com.zxg.maplehourse.repository.MProvinceRepository;
-import com.zxg.maplehourse.service.MRegionService;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MTbAreaEntity;
+import com.redofmaple.domain.MTbCityEntity;
+import com.redofmaple.domain.MTbProvinceEntity;
+import com.redofmaple.repository.MAreaRepository;
+import com.redofmaple.repository.MCityRepository;
+import com.redofmaple.repository.MProvinceRepository;
+import com.redofmaple.service.MRegionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class MRegionServiceImpl implements MRegionService {
     public ResultInfo selectArea() {
         ResultInfo resultInfo = new ResultInfo();
 
-        List<MAreaModel> mAreaModelList = mAreaRepository.findAll();
+        List<MTbAreaEntity> mAreaModelList = mAreaRepository.findAll();
 
 
         if (!CollectionUtils.isEmpty(mAreaModelList)) {
@@ -60,7 +61,7 @@ public class MRegionServiceImpl implements MRegionService {
         ResultInfo resultInfo = new ResultInfo();
 
 //        List<MCityModel> mCityModelList = mCityRepository.findAll();
-        Page<MCityModel> mCityModelList = mCityRepository.findAll(new PageRequest(1, 20));
+        Page<MTbCityEntity> mCityModelList = mCityRepository.findAll(new PageRequest(1, 20));
 //        if (!CollectionUtils.isEmpty(mCityModelList)) {
         resultInfo.setAppData(mCityModelList);
         logger.debug("城市列表显示");
@@ -74,7 +75,7 @@ public class MRegionServiceImpl implements MRegionService {
     public ResultInfo selectProvice() {
 
         ResultInfo resultInfo = new ResultInfo();
-        List<MProvinceModel> mProvinceModelList = mProvinceRepository.findAllBy();
+        List<MTbProvinceEntity> mProvinceModelList = mProvinceRepository.findAllBy();
 
 //        Page<MProvinceModel> mProvinceModelList = mProvinceRepository.findAll(new PageRequest(1,20));
         if (!CollectionUtils.isEmpty(mProvinceModelList)) {
@@ -89,29 +90,29 @@ public class MRegionServiceImpl implements MRegionService {
     }
 
     @Override
-    public Page<MCityModel> selectPageCity(Pageable pageable) {
+    public Page<MTbCityEntity> selectPageCity(Pageable pageable) {
 
-        Page<MCityModel> modelPage = mCityRepository.findAll(pageable);
+        Page<MTbCityEntity> modelPage = mCityRepository.findAll(pageable);
         return modelPage;
     }
 
 
     @Override
-    public Page<MProvinceModel> selectPageProvince(Pageable pageable) {
-        Page<MProvinceModel> modelPage = mProvinceRepository.findAll(pageable);
+    public Page<MTbProvinceEntity> selectPageProvince(Pageable pageable) {
+        Page<MTbProvinceEntity> modelPage = mProvinceRepository.findAll(pageable);
         return modelPage;
     }
 
     @Override
-    public Page<MProvinceModel> selectPageProvince(MProvinceModel mProvinceModel) {
+    public Page<MTbProvinceEntity> selectPageProvince(MTbProvinceEntity mProvinceModel) {
 
-        Page<MProvinceModel> modelPage = mProvinceRepository.findAll(new Specification() {
+        Page<MTbProvinceEntity> modelPage = mProvinceRepository.findAll(new Specification() {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Expression<String> mProvinceName = root.get("mProvinceName").as(String.class);
 
 //                Predicate predicate =
-                criteriaQuery.where(criteriaBuilder.like(mProvinceName, "%" + mProvinceModel.getMProvinceName() + "%"));
+                criteriaQuery.where(criteriaBuilder.like(mProvinceName, "%" + mProvinceModel.getmProvinceName() + "%"));
                 ;
                 return null;
             }
@@ -120,20 +121,20 @@ public class MRegionServiceImpl implements MRegionService {
     }
 
     @Override
-    public Page<MAreaModel> selectPageArea(Pageable pageable) {
-        Page<MAreaModel> modelPage = mAreaRepository.findAll(pageable);
+    public Page<MTbAreaEntity> selectPageArea(Pageable pageable) {
+        Page<MTbAreaEntity> modelPage = mAreaRepository.findAll(pageable);
         return modelPage;
     }
 
     @Override
-    public Page<MAreaModel> selectArea(MAreaModel mAreaModel) {
-        Page<MAreaModel> mAreaModels = mAreaRepository.findAll(new Specification() {
+    public Page<MTbAreaEntity> selectArea(MTbAreaEntity mAreaModel) {
+        Page<MTbAreaEntity> mAreaModels = mAreaRepository.findAll(new Specification() {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Expression<String> mAreaName = root.get("mAreaName").as(String.class);
 
 
-                Predicate predicate = criteriaBuilder.like(mAreaName, "%" + mAreaModel.getMAreaName() + "%");
+                Predicate predicate = criteriaBuilder.like(mAreaName, "%" + mAreaModel.getTbAreaName() + "%");
 
                 criteriaQuery.where(predicate);
                 return null;
@@ -145,14 +146,14 @@ public class MRegionServiceImpl implements MRegionService {
 
 
     @Override
-    public Page<MCityModel> selectCity(MCityModel mCityModel) {
-        Page<MCityModel> mCityModels = mCityRepository.findAll(new Specification() {
+    public Page<MTbCityEntity> selectCity(MTbCityEntity mCityModel) {
+        Page<MTbCityEntity> mCityModels = mCityRepository.findAll(new Specification() {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Expression<String> mCityName = root.get("mCityName").as(String.class);
 
 
-                Predicate predicate = criteriaBuilder.like(mCityName, "%" + mCityModel.getMCityName() + "%");
+                Predicate predicate = criteriaBuilder.like(mCityName, "%" + mCityModel.getTbCityName() + "%");
 
                 criteriaQuery.where(predicate);
                 return null;

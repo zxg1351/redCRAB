@@ -1,7 +1,8 @@
-package com.redofmaple.Service;
+package com.redofmaple.service;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.TLargeAreaModel;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MTbLargeAreaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,14 +13,14 @@ public interface TLargeAreaService {
     ResultInfo selectAllTLargeArea();
 
 
-    Page<TLargeAreaModel> selectAllpageLargeArea(Pageable page);
+    Page<MTbLargeAreaEntity> selectAllpageLargeArea(Pageable page);
 
 
-    ResultInfo saveLargeArea(TLargeAreaModel tLargeAreaModel);
+    ResultInfo saveLargeArea(MTbLargeAreaEntity tLargeAreaModel);
 
     ResultInfo findById(Integer largeAreaId);
 
-    ResultInfo editLargeArea(TLargeAreaModel tLargeAreaModel);
+    ResultInfo editLargeArea(MTbLargeAreaEntity tLargeAreaModel);
 
     ResultInfo deleteLargeAreaById(Integer largeAreaId);
 }

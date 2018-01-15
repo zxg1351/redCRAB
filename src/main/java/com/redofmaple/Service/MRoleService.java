@@ -1,7 +1,7 @@
-package com.redofmaple.Service;
+package com.redofmaple.service;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.MRoleModel;
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MMRoleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,18 +12,16 @@ public interface MRoleService {
 
     ResultInfo selectAllRole();
 
-    Page<MRoleModel> selectPageRole(Pageable pageable);
+    Page<MMRoleEntity> selectPageRole(Pageable pageable);
 
 
-    ResultInfo saveRole(MRoleModel mRoleModel);
+    ResultInfo saveRole(MMRoleEntity mRoleModel);
 
 
     ResultInfo findById(Integer id);
 
-    ResultInfo editRole(MRoleModel mRoleModel);
+    ResultInfo editRole(MMRoleEntity mRoleModel);
 
     ResultInfo deleteRoleById(Integer id);
 
-
-    Page<MRoleModel> selectRole(MRoleModel mRoleModel);
 }

@@ -1,4 +1,4 @@
-package com.redofmaple.Service.impl;
+package com.redofmaple.service.impl;
 
 import com.zxg.maplehourse.bean.ResultInfo;
 import com.zxg.maplehourse.common.utils.SecurityUtil;

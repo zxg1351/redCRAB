@@ -1,7 +1,8 @@
-package com.redofmaple.Service;
+package com.redofmaple.service;
 
 
 import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MTbBannerEntity;
 import com.redofmaple.model.MBannersModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,19 +19,19 @@ public interface MBannerService {
      ResultInfo selectAllBanner(String mBannerName);
 
 
-     ResultInfo insertBanner(MBannersModel mBannerModel);
+     ResultInfo insertBanner(MTbBannerEntity mBannerModel);
 
 
-     Page<MBannersModel> selectPageBanner(Pageable pageable);
+     Page<MTbBannerEntity> selectPageBanner(Pageable pageable);
 
 
      ResultInfo findById(Integer mbannerId);
 
 
-     ResultInfo editBanner(MBannersModel mBannerModel);
+     ResultInfo editBanner(MTbBannerEntity mBannerModel);
 
 
      ResultInfo deleteById(Integer mbannerId);
 
-     Page<MBannersModel> selectBanner(MBannersModel mRoleModel);
+     Page<MTbBannerEntity> selectBanner(MTbBannerEntity mRoleModel);
 }

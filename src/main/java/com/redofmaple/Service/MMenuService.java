@@ -1,7 +1,8 @@
-package com.redofmaple.Service;
+package com.redofmaple.service;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.MMenuModel;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MMMenuEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +14,5 @@ public interface MMenuService {
     ResultInfo selectMenu();
 
 
-    Page<MMenuModel> selectPageMenu(Pageable pageable);
+    Page<MMMenuEntity> selectPageMenu(Pageable pageable);
 }

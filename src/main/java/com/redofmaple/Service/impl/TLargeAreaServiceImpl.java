@@ -1,9 +1,9 @@
-package com.redofmaple.Service.impl;
+package com.redofmaple.service.impl;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.TLargeAreaModel;
-import com.zxg.maplehourse.repository.TLargeAreaRepository;
-import com.zxg.maplehourse.service.TLargeAreaService;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.repository.TLargeAreaRepository;
+import com.redofmaple.service.TLargeAreaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

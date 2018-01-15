@@ -1,8 +1,8 @@
-package com.redofmaple.Service;
+package com.redofmaple.service;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.MResetPsdModel;
-import com.zxg.maplehourse.model.MUserModel;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MTbUserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,19 +16,19 @@ public interface MUserService {
     ResultInfo selectAllUser();
 
 
-    ResultInfo saveUser(MUserModel mUserModel);
+    ResultInfo saveUser(MTbUserEntity mUserModel);
 
-    ResultInfo checkUser(MUserModel mUserModel);
+    ResultInfo checkUser(MTbUserEntity mUserModel);
 
-    Page<MUserModel> selectPageUser(Pageable pageable);
+    Page<MTbUserEntity> selectPageUser(Pageable pageable);
 
     ResultInfo findById(Integer id);
 
-    ResultInfo updateUser(MUserModel mUserModel);
+    ResultInfo updateUser(MTbUserEntity mUserModel);
 
-    Page<MUserModel> selectUser(MUserModel mUserModel);
+    Page<MTbUserEntity> selectUser(MTbUserEntity mUserModel);
 
     ResultInfo delUserById(Integer id);
 
-    ResultInfo resetPsdModal(MResetPsdModel mResetPsdModel);
+//    ResultInfo resetPsdModal(MResetPsdModel mResetPsdModel);
 }

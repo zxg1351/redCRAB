@@ -11,8 +11,6 @@ import java.util.List;
  */
 public interface MProvinceRepository extends JpaRepository<MTbProvinceEntity,Integer> ,JpaSpecificationExecutor{
 
-
-
     List<MTbProvinceEntity> findAllBy();
 
     List<MTbProvinceEntity> findAllByMProvinceName(String mProvinceName);

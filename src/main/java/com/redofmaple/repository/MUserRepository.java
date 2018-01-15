@@ -22,22 +22,4 @@ public interface MUserRepository extends JpaRepository<MTbUserEntity, Integer>, 
 
 
     Page<MTbUserEntity> findByDelFlag(String delFlag, Pageable pageable);
-
-    @Modifying
-    @Transactional
-    @Query("update MUserModel mu set mu.mUserName = ?1 , mu.mUserTel = ?2 where mu.id = ?3")
-    int setmUesrName(String mUserName, String mUserTel, int id);
-
-
-    @Modifying
-    @Transactional
-    @Query("update MUserModel mu set mu.delFlag =:delFlag, mu.updateUser=:updateUser,mu.updateTime =:updateTime where mu.id = :id")
-    int updateStatus(@Param("delFlag") String delFlag, @Param("updateUser") Integer updateUser, @Param("updateTime") Date updateTime,
-                     @Param("id") int id);
-
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE MUserModel mu set mu.mUserPassword  =:mUserPassword where mu.id =:id")
-    int updatePassword(@Param("mUserPassword") String mUserPassword, @Param("id") int id);
 }

@@ -1,9 +1,11 @@
-package com.redofmaple.Service.impl;
+package com.redofmaple.service.impl;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.MBannerModel;
-import com.zxg.maplehourse.repository.MBannerRepository;
-import com.zxg.maplehourse.service.MBannerService;
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.common.utils.UtilsTools;
+import com.redofmaple.domain.MTbBannerEntity;
+import com.redofmaple.model.MBannersModel;
+import com.redofmaple.repository.MBannerRepository;
+import com.redofmaple.service.MBannerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class MBannerServiceImpl implements MBannerService {
     public ResultInfo selectAllBanner(String mBannerName) {
         ResultInfo resultInfo = new ResultInfo();
 
-        List<MBannerModel> mBannerModelList = mBannerRepository.findAll();
+        List<MTbBannerEntity> mBannerModelList = mBannerRepository.findAll();
         if (!CollectionUtils.isEmpty(mBannerModelList)) {
             resultInfo.setAppData(mBannerModelList);
             logger.debug("查询轮播图成功");
@@ -43,24 +46,24 @@ public class MBannerServiceImpl implements MBannerService {
     }
 
     @Override
-    public ResultInfo insertBanner(MBannerModel mBannerModel) {
+    public ResultInfo insertBanner(MTbBannerEntity mBannerModel) {
         ResultInfo resultInfo = new ResultInfo();
 //        MBannerModel mBannerModel1 = new MBannerModel();
 //        mBannerModel1.setMBannerName("轮播图5");
 //        mBannerModel1.setMBannerUrl("http://pic.qiantucdn.com/58pic/11/24/04/67U58PIC2Db.jpg!/fw/780/watermark/url/L3dhdGVybWFyay12MS4zLnBuZw==/align/center");
 //        mBannerModel1.setMBannerType("0");
-        mBannerModel.setCreateTime(new Date());
+        mBannerModel.setCreateTime(new Timestamp(System.currentTimeMillis()));
         mBannerModel.setCreateUser(1);
-        MBannerModel mBannerModel2 = mBannerRepository.save(mBannerModel);
+        MTbBannerEntity mBannerModel2 = mBannerRepository.save(mBannerModel);
         resultInfo.setAppData(mBannerModel2);
         logger.debug("新建轮播图成功");
         return resultInfo;
     }
 
     @Override
-    public Page<MBannerModel> selectPageBanner(Pageable pageable) {
+    public Page<MTbBannerEntity> selectPageBanner(Pageable pageable) {
 
-        Page<MBannerModel> modelPage = mBannerRepository.findByDelFlag("0", pageable);
+        Page<MTbBannerEntity> modelPage = mBannerRepository.findByDelFlag("0", pageable);
         return modelPage;
     }
 
@@ -68,19 +71,17 @@ public class MBannerServiceImpl implements MBannerService {
     public ResultInfo findById(Integer mbannerId) {
 
         ResultInfo resultInfo = new ResultInfo();
-        MBannerModel mBannerModel = mBannerRepository.findOne(mbannerId);
+        MTbBannerEntity mBannerModel = mBannerRepository.findOne(mbannerId);
         resultInfo.setAppData(mBannerModel);
         return resultInfo;
     }
 
     @Override
-    public ResultInfo editBanner(MBannerModel mBannerModel) {
+    public ResultInfo editBanner(MTbBannerEntity mBannerModel) {
         ResultInfo resultInfo = new ResultInfo();
+        MTbBannerEntity mTbBannerEntity = mBannerRepository.findOne(mBannerModel.getId());
 
-
-        int result = mBannerRepository.editBanner(1, new Date(), mBannerModel.getMBannerName(),
-                mBannerModel.getMBannerUrl(), mBannerModel.getMBannerType(), mBannerModel.getId());
-
+        MTbBannerEntity result = mBannerRepository.save(mTbBannerEntity);
 
         resultInfo.setAppData(result);
         resultInfo.setResultMessage("修改成功");
@@ -89,14 +90,16 @@ public class MBannerServiceImpl implements MBannerService {
     }
 
     @Override
-    public ResultInfo deleteById(Integer mbannerId) {
+    public ResultInfo deleteById(Integer mBannerId) {
 
         ResultInfo resultInfo = new ResultInfo();
+        MTbBannerEntity mTbBannerEntity = mBannerRepository.findOne(mBannerId);
+        mTbBannerEntity.setDeleteFlag("1");//删除标识
+        mTbBannerEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+//        mTbBannerEntity.setUpdateUser(UtilsTools.generateUUID());
+//        int result = mBannerRepository.deleteBannerById(1, new Date(), "1", mbannerId);
 
-
-        int result = mBannerRepository.deleteBannerById(1, new Date(), "1", mbannerId);
-
-
+        MTbBannerEntity result = mBannerRepository.save(mTbBannerEntity);
         resultInfo.setAppData(result);
         resultInfo.setResultMessage("删除成功");
         resultInfo.setResultCode("success");
@@ -104,15 +107,15 @@ public class MBannerServiceImpl implements MBannerService {
     }
 
     @Override
-    public Page<MBannerModel> selectBanner(MBannerModel mBannerModel) {
+    public Page<MTbBannerEntity> selectBanner(MTbBannerEntity mBannerModel) {
 
-        Page<MBannerModel> mBannerModels = mBannerRepository.findAll(new Specification() {
+        Page<MTbBannerEntity> mBannerModels = mBannerRepository.findAll(new Specification() {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Expression<String> mBannerName = root.get("mBannerName").as(String.class);
                 Expression<String> delFlag = root.get("delFlag").as(String.class);
 
-                Predicate predicate = criteriaBuilder.like(mBannerName, "%" + mBannerModel.getMBannerName() + "%");
+                Predicate predicate = criteriaBuilder.like(mBannerName, "%" + mBannerModel.getmBannerName() + "%");
 
                 criteriaQuery.where(predicate, criteriaBuilder.equal(delFlag, "0"));
                 return null;

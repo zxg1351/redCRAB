@@ -1,9 +1,10 @@
-package com.redofmaple.Service.impl;
+package com.redofmaple.service.impl;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.MRoleModel;
-import com.zxg.maplehourse.repository.MRoleRepository;
-import com.zxg.maplehourse.service.MRoleService;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MMRoleEntity;
+import com.redofmaple.repository.MRoleRepository;
+import com.redofmaple.service.MRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class MRoleServiceImpl implements MRoleService {
 
         ResultInfo resultInfo = new ResultInfo();
 
-        List<MRoleModel> mRoleModelList = mRoleRepository.findAll();
+        List<MMRoleEntity> mRoleModelList = mRoleRepository.findAll();
 
         if (!CollectionUtils.isEmpty(mRoleModelList)) {
 
@@ -47,24 +49,23 @@ public class MRoleServiceImpl implements MRoleService {
     }
 
     @Override
-    public Page<MRoleModel> selectPageRole(Pageable pageable) {
+    public Page<MMRoleEntity> selectPageRole(Pageable pageable) {
 
-        Page<MRoleModel> modelPage = mRoleRepository.findByDelFlag("0", pageable);
-
+        Page<MMRoleEntity> modelPage = mRoleRepository.findAll(pageable);
         return modelPage;
     }
 
     @Override
-    public ResultInfo saveRole(MRoleModel mRoleModel) {
+    public ResultInfo saveRole(MMRoleEntity mRoleModel) {
 
         ResultInfo resultInfo = new ResultInfo();
 
-        mRoleModel.setCreateTime(new Date());
+        mRoleModel.setCreateTime(new Timestamp(System.currentTimeMillis()));
         mRoleModel.setCreateUser(1);
         mRoleModel.setDelFlag("0");
 
 
-        MRoleModel model = mRoleRepository.save(mRoleModel);
+        MMRoleEntity model = mRoleRepository.save(mRoleModel);
         resultInfo.setAppData(model);
         resultInfo.setResultMessage("成功新建角色");
         return resultInfo;
@@ -74,7 +75,7 @@ public class MRoleServiceImpl implements MRoleService {
     public ResultInfo findById(Integer id) {
 
         ResultInfo resultInfo = new ResultInfo();
-        MRoleModel model = mRoleRepository.findOne(id);
+        MMRoleEntity model = mRoleRepository.findOne(id);
         resultInfo.setAppData(model);
         resultInfo.setResultMessage("查询成功");
         resultInfo.setResultCode("success");
@@ -82,11 +83,11 @@ public class MRoleServiceImpl implements MRoleService {
     }
 
     @Override
-    public ResultInfo editRole(MRoleModel mRoleModel) {
+    public ResultInfo editRole(MMRoleEntity mRoleModel) {
 
         ResultInfo resultInfo = new ResultInfo();
 
-        int result = mRoleRepository.editRole(1, new Date(), mRoleModel.getMRoleName(), mRoleModel.getMRoleNumber(), mRoleModel.getId());
+        int result = 0;
 
         resultInfo.setAppData(result);
         resultInfo.setResultMessage("修改成功");
@@ -99,27 +100,9 @@ public class MRoleServiceImpl implements MRoleService {
 
         ResultInfo resultInfo = new ResultInfo();
 
-        int result = mRoleRepository.deleteRoleById(1, new Date(), "1", id);
+        int result = 0;
         resultInfo.setAppData(result);
         return resultInfo;
     }
 
-    @Override
-    public Page<MRoleModel> selectRole(MRoleModel mRoleModel) {
-
-        Page<MRoleModel> models = mRoleRepository.findAll(new Specification() {
-            @Override
-            public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
-
-                Expression<String> name = root.get("mRoleName").as(String.class);
-                Expression<String> delFlag = root.get("delFlag").as(String.class);
-
-                criteriaQuery.where(criteriaBuilder.like(name, "%" + mRoleModel.getMRoleName() + "%"), criteriaBuilder.equal(delFlag, "0"));
-
-
-                return null;
-            }
-        }, new PageRequest(0, 10));
-        return models;
-    }
 }

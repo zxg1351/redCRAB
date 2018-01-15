@@ -1,9 +1,10 @@
-package com.redofmaple.Service.impl;
+package com.redofmaple.service.impl;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.model.MMenuModel;
-import com.zxg.maplehourse.repository.MMenuRepository;
-import com.zxg.maplehourse.service.MMenuService;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MMMenuEntity;
+import com.redofmaple.repository.MMenuRepository;
+import com.redofmaple.service.MMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class MMenuServiceImpl implements MMenuService {
     public ResultInfo selectMenu() {
         ResultInfo resultInfo = new ResultInfo();
 
-        List<MMenuModel> mMenuModelList = mMenuRepository.findAll();
+        List<MMMenuEntity> mMenuModelList = mMenuRepository.findAll();
         if (!CollectionUtils.isEmpty(mMenuModelList)){
 
             resultInfo.setAppData(mMenuModelList);
@@ -39,9 +40,9 @@ public class MMenuServiceImpl implements MMenuService {
     }
 
     @Override
-    public Page<MMenuModel> selectPageMenu(Pageable pageable) {
+    public Page<MMMenuEntity> selectPageMenu(Pageable pageable) {
 
-        Page<MMenuModel> modelPage = mMenuRepository.findAll(pageable);
+        Page<MMMenuEntity> modelPage = mMenuRepository.findAll(pageable);
 
         return modelPage;
     }
