@@ -4,20 +4,20 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "tb_banner", schema = "test", catalog = "")
-public class MTbBannerEntity {
+@Table(name = "brand1", schema = "test", catalog = "")
+public class MBrand1Entity {
     @Id
     @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    @Column(name = "m_banner_name", nullable = true, length = 45)
-    private String mBannerName;
+    @Column(name = "brand_name", nullable = true, length = 45)
+    private String brandName;
     @Basic
-    @Column(name = "m_banner_url", nullable = true, length = 500)
-    private String mBannerUrl;
+    @Column(name = "brand_pic_url", nullable = true, length = 500)
+    private String brandPicUrl;
     @Basic
-    @Column(name = "m_banner_type", nullable = true, length = 1)
-    private String mBannerType;
+    @Column(name = "brand_introduce", nullable = true, length = 500)
+    private String brandIntroduce;
     @Basic
     @Column(name = "create_time", nullable = true)
     private Timestamp createTime;
@@ -30,13 +30,10 @@ public class MTbBannerEntity {
     @Basic
     @Column(name = "update_user", nullable = true)
     private Integer updateUser;
-    private String delFlag;
     @Basic
-    @Column(name = "delete_flag", nullable = true, length = 1)
-    private String deleteFlag;
+    @Column(name = "del_flag", nullable = true, length = 1)
+    private String delFlag;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -45,38 +42,30 @@ public class MTbBannerEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "m_banner_name", nullable = true, length = 45)
-    public String getmBannerName() {
-        return mBannerName;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setmBannerName(String mBannerName) {
-        this.mBannerName = mBannerName;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
-    @Basic
-    @Column(name = "m_banner_url", nullable = true, length = 500)
-    public String getmBannerUrl() {
-        return mBannerUrl;
+    public String getBrandPicUrl() {
+        return brandPicUrl;
     }
 
-    public void setmBannerUrl(String mBannerUrl) {
-        this.mBannerUrl = mBannerUrl;
+    public void setBrandPicUrl(String brandPicUrl) {
+        this.brandPicUrl = brandPicUrl;
     }
 
-    @Basic
-    @Column(name = "m_banner_type", nullable = true, length = 1)
-    public String getmBannerType() {
-        return mBannerType;
+    public String getBrandIntroduce() {
+        return brandIntroduce;
     }
 
-    public void setmBannerType(String mBannerType) {
-        this.mBannerType = mBannerType;
+    public void setBrandIntroduce(String brandIntroduce) {
+        this.brandIntroduce = brandIntroduce;
     }
 
-    @Basic
-    @Column(name = "create_time", nullable = true)
     public Timestamp getCreateTime() {
         return createTime;
     }
@@ -85,8 +74,6 @@ public class MTbBannerEntity {
         this.createTime = createTime;
     }
 
-    @Basic
-    @Column(name = "create_user", nullable = true)
     public Integer getCreateUser() {
         return createUser;
     }
@@ -95,8 +82,6 @@ public class MTbBannerEntity {
         this.createUser = createUser;
     }
 
-    @Basic
-    @Column(name = "update_time", nullable = true)
     public Timestamp getUpdateTime() {
         return updateTime;
     }
@@ -105,8 +90,6 @@ public class MTbBannerEntity {
         this.updateTime = updateTime;
     }
 
-    @Basic
-    @Column(name = "update_user", nullable = true)
     public Integer getUpdateUser() {
         return updateUser;
     }
@@ -115,8 +98,6 @@ public class MTbBannerEntity {
         this.updateUser = updateUser;
     }
 
-    @Basic
-    @Column(name = "del_flag", nullable = true, length = 1)
     public String getDelFlag() {
         return delFlag;
     }
@@ -130,12 +111,13 @@ public class MTbBannerEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MTbBannerEntity that = (MTbBannerEntity) o;
+        MBrand1Entity that = (MBrand1Entity) o;
 
         if (id != that.id) return false;
-        if (mBannerName != null ? !mBannerName.equals(that.mBannerName) : that.mBannerName != null) return false;
-        if (mBannerUrl != null ? !mBannerUrl.equals(that.mBannerUrl) : that.mBannerUrl != null) return false;
-        if (mBannerType != null ? !mBannerType.equals(that.mBannerType) : that.mBannerType != null) return false;
+        if (brandName != null ? !brandName.equals(that.brandName) : that.brandName != null) return false;
+        if (brandPicUrl != null ? !brandPicUrl.equals(that.brandPicUrl) : that.brandPicUrl != null) return false;
+        if (brandIntroduce != null ? !brandIntroduce.equals(that.brandIntroduce) : that.brandIntroduce != null)
+            return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         if (createUser != null ? !createUser.equals(that.createUser) : that.createUser != null) return false;
         if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
@@ -148,22 +130,14 @@ public class MTbBannerEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (mBannerName != null ? mBannerName.hashCode() : 0);
-        result = 31 * result + (mBannerUrl != null ? mBannerUrl.hashCode() : 0);
-        result = 31 * result + (mBannerType != null ? mBannerType.hashCode() : 0);
+        result = 31 * result + (brandName != null ? brandName.hashCode() : 0);
+        result = 31 * result + (brandPicUrl != null ? brandPicUrl.hashCode() : 0);
+        result = 31 * result + (brandIntroduce != null ? brandIntroduce.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (createUser != null ? createUser.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         result = 31 * result + (updateUser != null ? updateUser.hashCode() : 0);
         result = 31 * result + (delFlag != null ? delFlag.hashCode() : 0);
         return result;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag;
     }
 }

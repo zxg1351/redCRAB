@@ -4,20 +4,17 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "tb_banner", schema = "test", catalog = "")
-public class MTbBannerEntity {
+@Table(name = "m_user_role", schema = "test", catalog = "")
+public class MMUserRoleEntity {
     @Id
     @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    @Column(name = "m_banner_name", nullable = true, length = 45)
-    private String mBannerName;
+    @Column(name = "m_user_id", nullable = true)
+    private Integer mUserId;
     @Basic
-    @Column(name = "m_banner_url", nullable = true, length = 500)
-    private String mBannerUrl;
-    @Basic
-    @Column(name = "m_banner_type", nullable = true, length = 1)
-    private String mBannerType;
+    @Column(name = "m_role_id", nullable = true)
+    private Integer mRoleId;
     @Basic
     @Column(name = "create_time", nullable = true)
     private Timestamp createTime;
@@ -30,13 +27,10 @@ public class MTbBannerEntity {
     @Basic
     @Column(name = "update_user", nullable = true)
     private Integer updateUser;
-    private String delFlag;
     @Basic
-    @Column(name = "delete_flag", nullable = true, length = 1)
-    private String deleteFlag;
+    @Column(name = "del_flag", nullable = true, length = 1)
+    private String delFlag;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -45,38 +39,22 @@ public class MTbBannerEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "m_banner_name", nullable = true, length = 45)
-    public String getmBannerName() {
-        return mBannerName;
+    public Integer getmUserId() {
+        return mUserId;
     }
 
-    public void setmBannerName(String mBannerName) {
-        this.mBannerName = mBannerName;
+    public void setmUserId(Integer mUserId) {
+        this.mUserId = mUserId;
     }
 
-    @Basic
-    @Column(name = "m_banner_url", nullable = true, length = 500)
-    public String getmBannerUrl() {
-        return mBannerUrl;
+    public Integer getmRoleId() {
+        return mRoleId;
     }
 
-    public void setmBannerUrl(String mBannerUrl) {
-        this.mBannerUrl = mBannerUrl;
+    public void setmRoleId(Integer mRoleId) {
+        this.mRoleId = mRoleId;
     }
 
-    @Basic
-    @Column(name = "m_banner_type", nullable = true, length = 1)
-    public String getmBannerType() {
-        return mBannerType;
-    }
-
-    public void setmBannerType(String mBannerType) {
-        this.mBannerType = mBannerType;
-    }
-
-    @Basic
-    @Column(name = "create_time", nullable = true)
     public Timestamp getCreateTime() {
         return createTime;
     }
@@ -85,8 +63,6 @@ public class MTbBannerEntity {
         this.createTime = createTime;
     }
 
-    @Basic
-    @Column(name = "create_user", nullable = true)
     public Integer getCreateUser() {
         return createUser;
     }
@@ -95,8 +71,6 @@ public class MTbBannerEntity {
         this.createUser = createUser;
     }
 
-    @Basic
-    @Column(name = "update_time", nullable = true)
     public Timestamp getUpdateTime() {
         return updateTime;
     }
@@ -105,8 +79,6 @@ public class MTbBannerEntity {
         this.updateTime = updateTime;
     }
 
-    @Basic
-    @Column(name = "update_user", nullable = true)
     public Integer getUpdateUser() {
         return updateUser;
     }
@@ -115,8 +87,6 @@ public class MTbBannerEntity {
         this.updateUser = updateUser;
     }
 
-    @Basic
-    @Column(name = "del_flag", nullable = true, length = 1)
     public String getDelFlag() {
         return delFlag;
     }
@@ -130,12 +100,11 @@ public class MTbBannerEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MTbBannerEntity that = (MTbBannerEntity) o;
+        MMUserRoleEntity that = (MMUserRoleEntity) o;
 
         if (id != that.id) return false;
-        if (mBannerName != null ? !mBannerName.equals(that.mBannerName) : that.mBannerName != null) return false;
-        if (mBannerUrl != null ? !mBannerUrl.equals(that.mBannerUrl) : that.mBannerUrl != null) return false;
-        if (mBannerType != null ? !mBannerType.equals(that.mBannerType) : that.mBannerType != null) return false;
+        if (mUserId != null ? !mUserId.equals(that.mUserId) : that.mUserId != null) return false;
+        if (mRoleId != null ? !mRoleId.equals(that.mRoleId) : that.mRoleId != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         if (createUser != null ? !createUser.equals(that.createUser) : that.createUser != null) return false;
         if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
@@ -148,22 +117,13 @@ public class MTbBannerEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (mBannerName != null ? mBannerName.hashCode() : 0);
-        result = 31 * result + (mBannerUrl != null ? mBannerUrl.hashCode() : 0);
-        result = 31 * result + (mBannerType != null ? mBannerType.hashCode() : 0);
+        result = 31 * result + (mUserId != null ? mUserId.hashCode() : 0);
+        result = 31 * result + (mRoleId != null ? mRoleId.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (createUser != null ? createUser.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         result = 31 * result + (updateUser != null ? updateUser.hashCode() : 0);
         result = 31 * result + (delFlag != null ? delFlag.hashCode() : 0);
         return result;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag;
     }
 }
