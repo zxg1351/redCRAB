@@ -1,11 +1,11 @@
 package com.redofmaple.service.impl;
 
-import com.zxg.maplehourse.bean.ResultInfo;
-import com.zxg.maplehourse.common.utils.SecurityUtil;
-import com.zxg.maplehourse.model.MResetPsdModel;
-import com.zxg.maplehourse.model.MUserModel;
-import com.zxg.maplehourse.repository.MUserRepository;
-import com.zxg.maplehourse.service.MUserService;
+
+import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.common.utils.SecurityUtil;
+import com.redofmaple.domain.MTbUserEntity;
+import com.redofmaple.repository.MUserRepository;
+import com.redofmaple.service.MUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,7 @@ public class MUserServiceImpl implements MUserService {
 
         ResultInfo resultInfo = new ResultInfo();
 
-        List<MUserModel> mUserModelList = mUserRepository.findAll();
+        List<MTbUserEntity> mUserModelList = mUserRepository.findAll();
 
         if (!CollectionUtils.isEmpty(mUserModelList)) {
 
@@ -57,23 +58,23 @@ public class MUserServiceImpl implements MUserService {
      * @return
      */
     @Override
-    public ResultInfo saveUser(MUserModel mUserModel) {
+    public ResultInfo saveUser(MTbUserEntity mUserModel) {
 
         ResultInfo resultInfo = new ResultInfo();
-        List<MUserModel> mUserModelList = checkUserAccountAndTel(mUserModel.getMUserAccount(), mUserModel.getMUserTel());
+        List<MTbUserEntity> mUserModelList = checkUserAccountAndTel(mUserModel.getMUserAccount(), mUserModel.getMUserTel());
 
         if (CollectionUtils.isEmpty(mUserModelList)) {
 
-            mUserModel.setCreateTime(new Date());
+            mUserModel.setCreateTime(new Timestamp(System.currentTimeMillis()));
             mUserModel.setCreateUser(1);
-            mUserModel.setDelFlag("0");
+            mUserModel.setDeleteFlag("0");
             try {
                 String passWord = SecurityUtil.createSHA1(cryptKey.concat(SecurityUtil.decodeBase64(mUserModel.getMUserPassword())));
                 mUserModel.setMUserPassword(passWord);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            MUserModel userModel = mUserRepository.save(mUserModel);
+            MTbUserEntity userModel = mUserRepository.save(mUserModel);
 
             resultInfo.setAppData(userModel);
             resultInfo.setResultCode("success");
@@ -91,8 +92,8 @@ public class MUserServiceImpl implements MUserService {
      * @return
      */
     @Override
-    public ResultInfo checkUser(MUserModel mUserModel) {
-        List<MUserModel> mUserModelList = new ArrayList<>();
+    public ResultInfo checkUser(MTbUserEntity mUserModel) {
+        List<MTbUserEntity> mUserModelList = new ArrayList<>();
 
         ResultInfo resultInfo = new ResultInfo();
         try {
@@ -115,11 +116,11 @@ public class MUserServiceImpl implements MUserService {
     }
 
     @Override
-    public Page<MUserModel> selectPageUser(Pageable pageable) {
+    public Page<MTbUserEntity> selectPageUser(Pageable pageable) {
 
-        MUserModel mUserModel = new MUserModel();
+        MTbUserEntity mUserModel = new MTbUserEntity();
 
-        Page<MUserModel> modelPage = mUserRepository.findByDelFlag("0", pageable);
+        Page<MTbUserEntity> modelPage = mUserRepository.findByDelFlag("0", pageable);
 
 
         return modelPage;
@@ -129,7 +130,7 @@ public class MUserServiceImpl implements MUserService {
     public ResultInfo findById(Integer id) {
 
         ResultInfo resultInfo = new ResultInfo();
-        MUserModel mUserModel = mUserRepository.findOne(id);
+        MTbUserEntity mUserModel = mUserRepository.findOne(id);
         resultInfo.setAppData(mUserModel);
         resultInfo.setResultMessage("查询成功");
         resultInfo.setResultCode("success");
@@ -138,23 +139,23 @@ public class MUserServiceImpl implements MUserService {
 
 
     @Override
-    public ResultInfo updateUser(MUserModel mUserModel) {
+    public ResultInfo updateUser(MTbUserEntity mUserModel) {
 
         ResultInfo resultInfo = new ResultInfo();
-        mUserModel.setUpdateTime(new Date());
+        mUserModel.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         mUserModel.setCreateUser(1);
-        int userModel = mUserRepository.setmUesrName(mUserModel.getMUserName(), mUserModel.getMUserTel(), mUserModel.getId());
-        resultInfo.setAppData(userModel);
+//        int userModel = mUserRepository(mUserModel.getMUserName(), mUserModel.getMUserTel(), mUserModel.getId());
+//        resultInfo.setAppData(userModel);
         resultInfo.setResultCode("success");
         resultInfo.setResultMessage("");
         return resultInfo;
     }
 
     @Override
-    public Page<MUserModel> selectUser(MUserModel mUserModel) {
+    public Page<MTbUserEntity> selectUser(MTbUserEntity mUserModel) {
 
         ResultInfo resultInfo = new ResultInfo();
-        Page<MUserModel> modelPage = mUserRepository.findAll(new Specification() {
+        Page<MTbUserEntity> modelPage = mUserRepository.findAll(new Specification() {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Expression<String> mUserName = root.get("mUserName").as(String.class);
@@ -162,21 +163,9 @@ public class MUserServiceImpl implements MUserService {
                 Expression<String> delFlag = root.get("delFlag").as(String.class);
                 Expression<String> mUserAccount = root.get("mUserAccount").as(String.class);
 
-//                Predicate predicate = criteriaBuilder.or(
-//                        criteriaBuilder.like(mUserName, "%" + mUserModel.getMUserName() + "%"),
-//                        criteriaBuilder.like(mUserTel, "%" + mUserModel.getMUserTel() + "%"),
-//                        criteriaBuilder.like(mUserAccount, "%" + mUserModel.getMUserAccount() + "%")
-//                );
-//                Predicate predicate = criteriaBuilder.like(mUserName, "%" + mUserModel.getMUserName() + "%");
-//
-//                criteriaQuery.where(predicate);
-//                Predicate predicate = ;
-//                Predicate predicate = ;
                 criteriaQuery.where(criteriaBuilder.like(mUserName, "%" + mUserModel.getMUserName() + "%"),
                         criteriaBuilder.equal(delFlag, "0")
-//                        criteriaBuilder.like(mUserTel, "%" + mUserModel.getMUserTel() + "%")
                 );
-//                criteriaQuery.where(predicate);
                 return null;
             }
         }, new PageRequest(0, 10));
@@ -189,35 +178,36 @@ public class MUserServiceImpl implements MUserService {
     @Override
     public ResultInfo delUserById(Integer id) {
         ResultInfo resultInfo = new ResultInfo();
-        int a = mUserRepository.updateStatus("1", 1, new Date(), id);
+//        int a = mUserRepository.updateStatus("1", 1, new Date(), id);
+        int a = 0;
         resultInfo.setAppData(a);
         return resultInfo;
     }
 
-    @Override
-    public ResultInfo resetPsdModal(MResetPsdModel mResetPsdModel) {
-
-        ResultInfo resultInfo = new ResultInfo();
-
-
-        if (mResetPsdModel.getOldPassword().equals(mResetPsdModel.getNewPassword())){
-
-            resultInfo.setResultMessage("新旧密码不能一致！！！");
-            return resultInfo;
-        }else if (mResetPsdModel.getNewPassword().equals(mResetPsdModel.getOldPassword())){
-            resultInfo.setResultMessage("两次输入密码不一致！！！");
-            return resultInfo;
-        }
-        try {
-            String passWord = SecurityUtil.createSHA1(cryptKey.concat(SecurityUtil.decodeBase64(mResetPsdModel.getNewPassword())));
-            int a = mUserRepository.updatePassword(passWord,mResetPsdModel.getId());
-            resultInfo.setAppData(a);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return resultInfo;
-    }
+//    @Override
+//    public ResultInfo resetPsdModal(MResetPsdModel mResetPsdModel) {
+//
+//        ResultInfo resultInfo = new ResultInfo();
+//
+//
+//        if (mResetPsdModel.getOldPassword().equals(mResetPsdModel.getNewPassword())){
+//
+//            resultInfo.setResultMessage("新旧密码不能一致！！！");
+//            return resultInfo;
+//        }else if (mResetPsdModel.getNewPassword().equals(mResetPsdModel.getOldPassword())){
+//            resultInfo.setResultMessage("两次输入密码不一致！！！");
+//            return resultInfo;
+//        }
+//        try {
+//            String passWord = SecurityUtil.createSHA1(cryptKey.concat(SecurityUtil.decodeBase64(mResetPsdModel.getNewPassword())));
+//            int a = mUserRepository.updatePassword(passWord,mResetPsdModel.getId());
+//            resultInfo.setAppData(a);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return resultInfo;
+//    }
 
     /**
      * 校验用户名和手机号码
@@ -226,10 +216,10 @@ public class MUserServiceImpl implements MUserService {
      * @param mUserTel
      * @return
      */
-    private List<MUserModel> checkUserAccountAndTel(String mUserAccount, String mUserTel) {
+    private List<MTbUserEntity> checkUserAccountAndTel(String mUserAccount, String mUserTel) {
 
 
-        List<MUserModel> mUserModelList = mUserRepository.findByMUserAccountOrMUserTel(mUserAccount, mUserTel);
+        List<MTbUserEntity> mUserModelList = mUserRepository.findByMUserAccountOrMUserTel(mUserAccount, mUserTel);
         return mUserModelList;
     }
 

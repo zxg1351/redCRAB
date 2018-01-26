@@ -115,7 +115,7 @@ public class MBannerServiceImpl implements MBannerService {
                 Expression<String> mBannerName = root.get("mBannerName").as(String.class);
                 Expression<String> delFlag = root.get("delFlag").as(String.class);
 
-                Predicate predicate = criteriaBuilder.like(mBannerName, "%" + mBannerModel.getmBannerName() + "%");
+                Predicate predicate = criteriaBuilder.like(mBannerName, "%" + mBannerModel.getMBannerName() + "%");
 
                 criteriaQuery.where(predicate, criteriaBuilder.equal(delFlag, "0"));
                 return null;

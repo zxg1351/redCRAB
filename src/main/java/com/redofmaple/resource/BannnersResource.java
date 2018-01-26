@@ -18,7 +18,8 @@ public class BannnersResource {
     @RequestMapping(value = "/searchBanners")
     public MBannersModel searchBanners(){
 
-
+        MBannersModel mBannersModel = new MBannersModel();
+        return mBannersModel;
     }
 
 

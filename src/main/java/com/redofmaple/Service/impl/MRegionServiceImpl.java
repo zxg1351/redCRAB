@@ -112,7 +112,7 @@ public class MRegionServiceImpl implements MRegionService {
                 Expression<String> mProvinceName = root.get("mProvinceName").as(String.class);
 
 //                Predicate predicate =
-                criteriaQuery.where(criteriaBuilder.like(mProvinceName, "%" + mProvinceModel.getmProvinceName() + "%"));
+                criteriaQuery.where(criteriaBuilder.like(mProvinceName, "%" + mProvinceModel.getMProvinceName() + "%"));
                 ;
                 return null;
             }

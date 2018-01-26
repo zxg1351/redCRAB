@@ -2,6 +2,7 @@ package com.redofmaple.service.impl;
 
 
 import com.redofmaple.common.bean.ResultInfo;
+import com.redofmaple.domain.MTbLargeAreaEntity;
 import com.redofmaple.repository.TLargeAreaRepository;
 import com.redofmaple.service.TLargeAreaService;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class TLargeAreaServiceImpl implements TLargeAreaService {
     private TLargeAreaRepository tLargeAreaRepository;
 
     @Override
-    public ResultInfo saveLargeArea(TLargeAreaModel tLargeAreaModel) {
+    public ResultInfo saveLargeArea(MTbLargeAreaEntity tLargeAreaModel) {
         return null;
     }
 
@@ -31,7 +32,7 @@ public class TLargeAreaServiceImpl implements TLargeAreaService {
     }
 
     @Override
-    public ResultInfo editLargeArea(TLargeAreaModel tLargeAreaModel) {
+    public ResultInfo editLargeArea(MTbLargeAreaEntity tLargeAreaModel) {
         return null;
     }
 
@@ -45,7 +46,7 @@ public class TLargeAreaServiceImpl implements TLargeAreaService {
 
         ResultInfo resultInfo = new ResultInfo();
 
-        List<TLargeAreaModel> areaModelList = tLargeAreaRepository.findAll();
+        List<MTbLargeAreaEntity> areaModelList = tLargeAreaRepository.findAll();
         if (!CollectionUtils.isEmpty(areaModelList)) {
 
             resultInfo.setAppData(areaModelList);
@@ -59,8 +60,8 @@ public class TLargeAreaServiceImpl implements TLargeAreaService {
     }
 
     @Override
-    public Page<TLargeAreaModel> selectAllpageLargeArea(Pageable page) {
-        Page<TLargeAreaModel> areaModelList = tLargeAreaRepository.findAll(page);
+    public Page<MTbLargeAreaEntity> selectAllpageLargeArea(Pageable page) {
+        Page<MTbLargeAreaEntity> areaModelList = tLargeAreaRepository.findAll(page);
         if (!CollectionUtils.isEmpty(areaModelList.getContent())) {
 
             logger.debug("大区域列表所示：");
