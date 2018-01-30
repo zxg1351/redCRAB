@@ -19,10 +19,7 @@ import java.util.List;
 public interface MBannerRepository extends JpaRepository<MTbBannerEntity, Integer>, JpaSpecificationExecutor {
 
 
-    List<MTbBannerEntity> findAll();
 
-    List<MTbBannerEntity> findByMBannerNameLike(String mBannerName);
-
-    Page<MTbBannerEntity> findByDelFlag(String delFlag, Pageable pageable);
+    Page<MTbBannerEntity> findByDeleteFlag(String deleteFlag, Pageable pageable);
 
 }

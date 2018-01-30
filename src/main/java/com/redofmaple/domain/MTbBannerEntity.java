@@ -32,7 +32,6 @@ public class MTbBannerEntity {
     @Basic
     @Column(name = "update_user", nullable = true)
     private Integer updateUser;
-    private String delFlag;
     @Basic
     @Column(name = "delete_flag", nullable = true, length = 1)
     private String deleteFlag;
